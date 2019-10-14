@@ -1,0 +1,13 @@
+{
+    "name": "Steam-sale-timer",
+    "version": "1.0.0",
+    "description": "My steam bot",
+    "main": "bot.js",
+    "author": "Cagey",
+    "dependencies": {
+        "discord.io": "^2.5.3",
+        "discord.js": "^11.5.1",
+        "howlongtobeat": "^1.1.1",
+        "winston": "^3.2.1"
+    }
+}
