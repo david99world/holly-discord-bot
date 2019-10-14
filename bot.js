@@ -1,10 +1,10 @@
 /**
- * A ping pong bot, whenever you send "ping", it replies "pong".
+ * A Discord bot in the style of Red Dwarf's Holly
  */
 
 // Import the discord.js module
 const Discord = require('discord.js');
-const hltb = require('./hltb.js');
+const hltb = require('howlongtobeat');
 const steamsale = require('./steamsale.js');
 const auth = require('./auth.json');
 
@@ -25,26 +25,27 @@ client.on('ready', () => {
 // Create an event listener for messages
 client.on('message', message => {
   if (message.content === steamSaleCommand) {
-    message.channel.send(getSteamSaleMessage());
+    writeSteamSaleMessage(message);
   }
-  if (message.content === hltbCommand) {
-    message.channel.send(getHltbMessage());
+  if (message.content.startsWith(hltbCommand)) { 
+    var gameId = 36936;
+    writeHltbMessage(message, gameId);
   }
-
 });
+
+function writeSteamSaleMessage(message) {
+  message.channel.send(getSteamSaleMessage());
+}
+
+function writeHltbMessage(message, gameId) {
+  let hltbService = new hltb.HowLongToBeatService();
+  hltbService.detail(gameId).then(result => {
+    message.channel.send(result.name);
+  });
+}
 
 function getSteamSaleMessage() {
   return 'next steam sale is ' + steamsale.getSteamSale() + ', ' + Math.floor((steamsale.getTimeUntilSteamSale() / (1000 * 60 * 60 * 24))) + ' days away!';
-}
-
-async function getHltbMessage() {
-  var output;
-  await hltb.getGame(36936).then(function (result) {
-    output = result.name + ' is  about ' + result.gameplayMainExtra + ' hours long';
-    console.log(result.name + ' is  about ' + result.gameplayMainExtra + ' hours long');
-    console.log('output is ' + output);
-  });
-  return output;
 }
 
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
