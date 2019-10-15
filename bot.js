@@ -10,6 +10,7 @@ const auth = require('./auth.json');
 
 const hltbCommand = '!hltb'
 const steamSaleCommand = '!steamsale';
+const holly = 'Holly-game-bot';
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
@@ -24,12 +25,11 @@ client.on('ready', () => {
 
 // Create an event listener for messages
 client.on('message', message => {
-  if (message.content === steamSaleCommand) {
+  if (message.author.username != holly && message.content === steamSaleCommand) {
     writeSteamSaleMessage(message);
   }
-  if (message.content.startsWith(hltbCommand)) { 
-    var gameId = 36936;
-    writeHltbMessage(message, gameId);
+  if (message.author.username != holly && message.content.startsWith(hltbCommand)) {
+    writeHltbMessage(message);
   }
 });
 
@@ -37,10 +37,15 @@ function writeSteamSaleMessage(message) {
   message.channel.send(getSteamSaleMessage());
 }
 
-function writeHltbMessage(message, gameId) {
+async function writeHltbMessage(message) {
+  let gameId = '';
   let hltbService = new hltb.HowLongToBeatService();
-  hltbService.detail(gameId).then(result => {
-    message.channel.send(result.name);
+  await hltbService.search(message.content.slice(5)).then(function (response) {
+    gameId = response[0].id;
+  });
+  await hltbService.detail(gameId).then(result => {
+    message.channel.send(result.name + " main story is " + result.gameplayMain + 
+      ", extras " + result.gameplayMainExtra + " and completion " + result.gameplayCompletionist);
   });
 }
 
