@@ -6,7 +6,7 @@
 const Discord = require('discord.js');
 const hltb = require('howlongtobeat');
 const steamsale = require('./steamsale.js');
-const auth = require('./auth.json');
+const auth = require('./token/auth.json');
 
 const hltbCommand = '!hltb'
 const steamSaleCommand = '!steamsale';
@@ -44,8 +44,11 @@ async function writeHltbMessage(message) {
     gameId = response[0].id;
   });
   await hltbService.detail(gameId).then(result => {
-    message.channel.send(result.name + " main story is " + result.gameplayMain + 
-      ", extras " + result.gameplayMainExtra + " and completion " + result.gameplayCompletionist);
+    var output = result.name + " main story is " + result.gameplayMain + 
+    "hrs, extras " + result.gameplayMainExtra + "hrs and completion " + result.gameplayCompletionist + "hrs";
+    console.log(output);
+    message.channel.send(output);
+      
   });
 }
 
