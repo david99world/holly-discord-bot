@@ -8,8 +8,7 @@ const hltb = require('howlongtobeat');
 const steamsale = require('./steamsale.js');
 const auth = require('./token/auth.json');
 
-const hltbCommand = '!hltb'
-const steamSaleCommand = '!steamsale';
+
 const holly = 'Holly-game-bot';
 
 // Create an instance of a Discord client
@@ -31,7 +30,15 @@ client.on('message', message => {
   if (message.author.username != holly && message.content.startsWith(hltbCommand)) {
     writeHltbMessage(message);
   }
+  if (message.author.username != holly && message.content === topGames) {
+    writeTopGamesMessage(message);
+  }
+
 });
+
+function writeTopGamesMessage(message) {
+
+}
 
 function writeSteamSaleMessage(message) {
   message.channel.send(getSteamSaleMessage());

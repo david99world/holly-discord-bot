@@ -1,11 +1,9 @@
-var today = Date.now();
-var steamsale = new Date('2019-10-29');
-var timeUntil = steamsale - today;
+var steamsale = new Date('2019-11-26');
 
 exports.getSteamSale = function () {
     return steamsale.toDateString();
 };
 
 exports.getTimeUntilSteamSale = function () {
-    return timeUntil;
+    return steamsale - Date.now();
 };
