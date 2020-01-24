@@ -1,4 +1,6 @@
 const hltbCommand = '!hltb'
-const steamSaleCommand = '!steamsale';
-const topGames = '!topgames';
+
+exports.getHltbCommand = function() {
+    return hltbCommand;
+}
 

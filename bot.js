@@ -5,7 +5,7 @@
 // Import the discord.js module
 const Discord = require('discord.js');
 const hltb = require('howlongtobeat');
-const steamsale = require('./steamsale.js');
+const commands = require('./commands.js');
 const auth = require('./token/auth.json');
 
 
@@ -24,25 +24,10 @@ client.on('ready', () => {
 
 // Create an event listener for messages
 client.on('message', message => {
-  if (message.author.username != holly && message.content === steamSaleCommand) {
-    writeSteamSaleMessage(message);
-  }
-  if (message.author.username != holly && message.content.startsWith(hltbCommand)) {
+  if (message.author.username != holly && message.content.startsWith(commands.getHltbCommand())) {
     writeHltbMessage(message);
   }
-  if (message.author.username != holly && message.content === topGames) {
-    writeTopGamesMessage(message);
-  }
-
 });
-
-function writeTopGamesMessage(message) {
-
-}
-
-function writeSteamSaleMessage(message) {
-  message.channel.send(getSteamSaleMessage());
-}
 
 async function writeHltbMessage(message) {
   let gameId = '';
@@ -57,10 +42,6 @@ async function writeHltbMessage(message) {
     message.channel.send(output);
       
   });
-}
-
-function getSteamSaleMessage() {
-  return 'next steam sale is ' + steamsale.getSteamSale() + ', ' + Math.floor((steamsale.getTimeUntilSteamSale() / (1000 * 60 * 60 * 24))) + ' days away!';
 }
 
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
