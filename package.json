@@ -5,6 +5,7 @@
     "main": "bot.js",
     "author": "Cagey",
     "dependencies": {
+        "@google-cloud/secret-manager": "^1.2.1",
         "discord.io": "^2.5.3",
         "discord.js": "^11.5.1",
         "howlongtobeat": "^1.1.1",

@@ -6,8 +6,9 @@
 const Discord = require('discord.js');
 const hltb = require('howlongtobeat');
 const commands = require('./commands.js');
-const auth = require('./token/auth.json');
-
+const {SecretManagerServiceClient} = require('@google-cloud/secret-manager');
+const secretClient = new SecretManagerServiceClient();
+const name = 'projects/768903241973/secrets/discordHollyAuth/versions/latest';
 
 const holly = 'Holly-game-bot';
 
@@ -40,9 +41,13 @@ async function writeHltbMessage(message) {
     "hrs, extras " + result.gameplayMainExtra + "hrs and completion " + result.gameplayCompletionist + "hrs";
     console.log(output);
     message.channel.send(output);
-      
   });
 }
+async function login() {
+  const [version] = await secretClient.accessSecretVersion({
+    name: name,
+  });
 
-// Log our bot in using the token from https://discordapp.com/developers/applications/me
-client.login(auth.token);
+   client.login(version.payload.data.toString('utf8'));
+}
+login();
