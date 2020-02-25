@@ -26,6 +26,9 @@ client.on('ready', () => {
 // Create an event listener for messages
 client.on('message', message => {
   if (message.author.username != holly && message.content.startsWith(commands.getHltbCommand())) {
+    if(message.guild.available) {
+      console.log("Guild name " + message.guild.name);
+  }
     writeHltbMessage(message);
   }
 });
@@ -40,6 +43,7 @@ async function writeHltbMessage(message) {
     var output = result.name + " main story is " + result.gameplayMain + 
     "hrs, extras " + result.gameplayMainExtra + "hrs and completion " + result.gameplayCompletionist + "hrs";
     console.log(output);
+    console.log(result.name + " asked for");
     message.channel.send(output);
   });
 }
