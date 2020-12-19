@@ -7,7 +7,6 @@ const Discord = require('discord.js');
 const hltb = require('howlongtobeat');
 const commands = require('./commands.js');
 
-const metacritic = require('metacritic-scraper')
 const holly = 'Holly-game-bot';
 const auth = require('./token/auth.json');
 
